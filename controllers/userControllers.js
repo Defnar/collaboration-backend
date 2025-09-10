@@ -13,3 +13,27 @@ const register = async (req, res) => {
     console.log(err);
   }
 };
+
+const login = async (req, res) => {
+  try {
+    if (!req.body)
+      return res.status(400).json({ message: "Body cannot be empty" });
+
+    const { email, password } = req.body;
+
+    const user = await User.find({ email: email });
+
+    if (!email || !password)
+      return res.status(400).json({ message: "email/password missing" });
+
+    if (!user || !user.isCorrectPassword(password))
+      return res.status(403).json({ message: "email or password is wrong" });
+
+    req.user = user;
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = {register, login};
