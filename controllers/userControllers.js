@@ -1,3 +1,4 @@
+const { signToken } = require("../../../Project 3/auth/auth");
 const User = require("../models/User");
 
 const register = async (req, res) => {
@@ -26,14 +27,16 @@ const login = async (req, res) => {
     if (!email || !password)
       return res.status(400).json({ message: "email/password missing" });
 
-    if (!user || !user.isCorrectPassword(password))
+    if (!user || !(await user.isCorrectPassword(password)))
       return res.status(403).json({ message: "email or password is wrong" });
 
-    req.user = user;
+    const token = signToken(user);
+
+    res.json({ token, user });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: err.message });
   }
 };
 
-module.exports = {register, login};
+module.exports = { register, login };
