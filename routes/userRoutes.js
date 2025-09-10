@@ -5,4 +5,4 @@ const router = e.Router();
 router.use("/login", login);
 router.use("/register", register);
 
-module.export = router;
+module.exports = router;
