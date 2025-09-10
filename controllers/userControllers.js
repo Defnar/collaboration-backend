@@ -1,6 +1,6 @@
 const User = require("../models/User");
 
-const login = async (req, res) => {
+const register = async (req, res) => {
   try {
     if (!req.body)
       return res.status(400).json({ message: "body cannot be empty" });
