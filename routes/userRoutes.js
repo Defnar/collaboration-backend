@@ -2,7 +2,7 @@ const e = require("express");
 const { login, register } = require("../controllers/userControllers");
 const router = e.Router();
 
-router.use("/login", login);
-router.use("/register", register);
+router.post("/login", login);
+router.post("/register", register);
 
 module.exports = router;

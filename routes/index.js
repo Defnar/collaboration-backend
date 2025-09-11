@@ -5,6 +5,8 @@ const router = e.Router();
 //api...
 router.use("/users", userRoutes);
 
+router.use(authMiddleware);
+
 router.get("/products", async (req, res) => {
   try {
     const response = await axios.get("https://fakestoreapi.com/products");
