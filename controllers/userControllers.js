@@ -17,12 +17,14 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log("login attempt: ", req.body)
     if (!req.body)
       return res.status(400).json({ message: "Body cannot be empty" });
 
     const { email, password } = req.body;
 
-    const user = await User.find({ email: email });
+    const user = await User.findOne({ email: email });
+
 
     if (!email || !password)
       return res.status(400).json({ message: "email/password missing" });

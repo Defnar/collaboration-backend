@@ -3,15 +3,17 @@ const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const expiration = "30m";
 
-const authMiddleware = async (req, res) => {
+const authMiddleware = async (req, res, next) => {
   let token = req.headers.authorization;
 
-  token = token.split(" ").pop().trim();
+  console.log(req.headers);
+
+  token = token?.split(" ").pop().trim() || null;
 
   if (!token) return req;
 
   try {
-    const data = jwt.verify(token, secret);
+    const { data } = jwt.verify(token, secret);
     req.user = data;
   } catch (err) {
     console.log(err);
